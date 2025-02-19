@@ -923,8 +923,8 @@ def register_attendance_callbacks(app):
         time_series_fig = px.line(
             time_series_data,
             x="date",
-            y="employee_count",
-            title="Employee Count Over Time",
+            y="Employee Count",
+            title="Employee Volume Over Time",
         )
 
         # Create heatmap with custom color scale
@@ -933,7 +933,7 @@ def register_attendance_callbacks(app):
             labels=dict(x="Weekday", y="Hour of Day", color="Employee Count"),
             x=weekday_order,
             y=heatmap_data_pivot.index,
-            title="Employee Count Heatmap (Hour vs Weekday)",
+            title="Employee Volume (Hour vs Weekday)",
             aspect="auto",
             color_continuous_scale=custom_colorscale,  # Apply custom color scale
         )

@@ -923,8 +923,21 @@ def register_attendance_callbacks(app):
         time_series_fig = px.line(
             time_series_data,
             x="date",
-            y="Employee Count",
-            title="Employee Volume Over Time",
+            y="employee_count",
+            title="Employee Count Over Time",
+            color_discrete_sequence=["green"],  # Change the line color here
+        )
+
+        # Improve layout
+        time_series_fig.update_layout(xaxis_title="", yaxis_title="Employee Count")
+        # Remove background and legend
+        time_series_fig.update_layout(
+            plot_bgcolor="rgba(0,0,0,0)",
+            paper_bgcolor="rgba(0,0,0,0)",
+            title={
+                "text": "<b><u>Employee Volume (Attendance) Over Time</u></b>",
+                "font": {"color": "#1E1E1E"},
+            },
         )
 
         # Create heatmap with custom color scale
@@ -933,9 +946,21 @@ def register_attendance_callbacks(app):
             labels=dict(x="Weekday", y="Hour of Day", color="Employee Count"),
             x=weekday_order,
             y=heatmap_data_pivot.index,
-            title="Employee Volume (Hour vs Weekday)",
+            title="Employee Count Heatmap (Hour vs Weekday)",
             aspect="auto",
             color_continuous_scale=custom_colorscale,  # Apply custom color scale
+        )
+        
+        # Improve layout
+        heatmap_fig.update_layout(xaxis_title="", yaxis_title="Employee Count")
+        # Remove background and legend
+        heatmap_fig.update_layout(
+            plot_bgcolor="rgba(0,0,0,0)",
+            paper_bgcolor="rgba(0,0,0,0)",
+            title={
+                "text": "<b><u>Employee Count Heatmap (Hour vs Weekday)</u></b>",
+                "font": {"color": "#1E1E1E"},
+            },
         )
 
         return time_series_fig, heatmap_fig

@@ -650,110 +650,110 @@ def register_hr_page_callbacks(app):
 
         return fig
 
-    @app.callback(
-        Output("percentage-distribution-by-cadre", "figure"),
-        [
-            Input("hr-facility-filter", "value"),
-        ],
-    )
-    def update_percentage_distribution_by_cadre(facility):
-        # state, lga, ward,
-        cadre_counts = prepare_percentage_distribution_by_cadre(
-            merged_hr_data, facility
-        )
-        if cadre_counts.empty:
-            return go.Figure().add_annotation(
-                text="No data available", x=0.5, y=0.5, showarrow=False
-            )
-        if "cadre" not in cadre_counts.columns:
-            return px.pie(title="Cadre column not found")
-        # Sort the DataFrame by 'percentage' in descending order and select the top 10 rows
-        top_10_cadre_counts = cadre_counts.sort_values(
-            "percentage", ascending=False
-        ).head(10)
+    # @app.callback(
+    #     Output("percentage-distribution-by-cadre", "figure"),
+    #     [
+    #         Input("hr-facility-filter", "value"),
+    #     ],
+    # )
+    # def update_percentage_distribution_by_cadre(facility):
+    #     # state, lga, ward,
+    #     cadre_counts = prepare_percentage_distribution_by_cadre(
+    #         merged_hr_data, facility
+    #     )
+    #     if cadre_counts.empty:
+    #         return go.Figure().add_annotation(
+    #             text="No data available", x=0.5, y=0.5, showarrow=False
+    #         )
+    #     if "cadre" not in cadre_counts.columns:
+    #         return px.pie(title="Cadre column not found")
+    #     # Sort the DataFrame by 'percentage' in descending order and select the top 10 rows
+    #     top_10_cadre_counts = cadre_counts.sort_values(
+    #         "percentage", ascending=False
+    #     ).head(10)
 
-        # Create the pie chart using the top 10 rows
-        fig = px.pie(
-            top_10_cadre_counts,
-            names="cadre",
-            values="percentage",
-            labels={"percentage": "Percentage"},
-            color_discrete_sequence=[
-                "#062d14",
-                "#15522a",
-                "#165e2e",
-                "#177e38",
-                "#18a145",
-                "#25c258",
-                "#4cdc7a",
-                "#88eda7",
-                "#bcf6cd",
-                "#ddfbe6",
-            ],
-        )
+    #     # Create the pie chart using the top 10 rows
+    #     fig = px.pie(
+    #         top_10_cadre_counts,
+    #         names="cadre",
+    #         values="percentage",
+    #         labels={"percentage": "Percentage"},
+    #         color_discrete_sequence=[
+    #             "#062d14",
+    #             "#15522a",
+    #             "#165e2e",
+    #             "#177e38",
+    #             "#18a145",
+    #             "#25c258",
+    #             "#4cdc7a",
+    #             "#88eda7",
+    #             "#bcf6cd",
+    #             "#ddfbe6",
+    #         ],
+    #     )
 
-        # Apply custom hover template and clean up layout
-        fig.update_traces(
-            hovertemplate="<b>Cadre: </b> %{label}<br><b>Percentage: </b> %{percent:.2%}<extra></extra>"
-        )
-        fig.update_layout(
-            showlegend=False,  # Remove legend
-            plot_bgcolor="rgba(0,0,0,0)",  # Transparent plot background
-            paper_bgcolor="rgba(0,0,0,0)",  # Transparent figure background
-            title={
-                "text": "<b><u>Top 10 Percentage Distribution by Cadre</u></b>",
-                "font": {"color": "#1E1E1E"},
-            },
-        )
+    #     # Apply custom hover template and clean up layout
+    #     fig.update_traces(
+    #         hovertemplate="<b>Cadre: </b> %{label}<br><b>Percentage: </b> %{percent:.2%}<extra></extra>"
+    #     )
+    #     fig.update_layout(
+    #         showlegend=False,  # Remove legend
+    #         plot_bgcolor="rgba(0,0,0,0)",  # Transparent plot background
+    #         paper_bgcolor="rgba(0,0,0,0)",  # Transparent figure background
+    #         title={
+    #             "text": "<b><u>Top 10 Percentage Distribution by Cadre</u></b>",
+    #             "font": {"color": "#1E1E1E"},
+    #         },
+    #     )
 
-        return fig
+    #     return fig
 
-    @app.callback(
-        Output("employee-percentage-by-employment-type", "figure"),
-        [
-            Input("hr-facility-filter", "value"),
-        ],
-    )
-    def update_employee_percentage_by_employment_type(facility):
-        # state, lga, ward,
-        employment_type_counts = prepare_employee_percentage_by_employment_type(
-            merged_hr_data, facility
-        )
-        if employment_type_counts.empty:
-            return go.Figure().add_annotation(
-                text="No data available", x=0.5, y=0.5, showarrow=False
-            )
-        if "employment_type" not in employment_type_counts.columns:
-            return px.pie(title="Cadre column not found")
+    # @app.callback(
+    #     Output("employee-percentage-by-employment-type", "figure"),
+    #     [
+    #         Input("hr-facility-filter", "value"),
+    #     ],
+    # )
+    # def update_employee_percentage_by_employment_type(facility):
+    #     # state, lga, ward,
+    #     employment_type_counts = prepare_employee_percentage_by_employment_type(
+    #         merged_hr_data, facility
+    #     )
+    #     if employment_type_counts.empty:
+    #         return go.Figure().add_annotation(
+    #             text="No data available", x=0.5, y=0.5, showarrow=False
+    #         )
+    #     if "employment_type" not in employment_type_counts.columns:
+    #         return px.pie(title="Cadre column not found")
 
-        fig = px.pie(
-            employment_type_counts,
-            names="employment_type",
-            values="percentage",
-            labels={"percentage": "Percentage"},
-            color_discrete_sequence=[
-                "#062d14",
-                "#15522a",
-                "#165e2e",
-                "#177e38",
-            ],
-        )
+    #     fig = px.pie(
+    #         employment_type_counts,
+    #         names="employment_type",
+    #         values="percentage",
+    #         labels={"percentage": "Percentage"},
+    #         color_discrete_sequence=[
+    #             "#062d14",
+    #             "#15522a",
+    #             "#165e2e",
+    #             "#177e38",
+    #         ],
+    #     )
 
-        # Apply custom hover template and clean up layout
-        fig.update_traces(
-            hovertemplate="<b>Employment Type: </b> %{label}<br><b>Percentage: </b> %{percent:.2%}<extra></extra>"
-        )
-        fig.update_layout(
-            showlegend=False,  # Remove legend
-            plot_bgcolor="rgba(0,0,0,0)",  # Transparent plot background
-            paper_bgcolor="rgba(0,0,0,0)",  # Transparent figure background
-            title={
-                "text": "<b><u>Employee Percentage Count by Employment Type</u></b>",
-                "font": {"color": "#1E1E1E"},
-            },
-        )
+    #     # Apply custom hover template and clean up layout
+    #     fig.update_traces(
+    #         hovertemplate="<b>Employment Type: </b> %{label}<br><b>Percentage: </b> %{percent:.2%}<extra></extra>"
+    #     )
+    #     fig.update_layout(
+    #         showlegend=False,  # Remove legend
+    #         plot_bgcolor="rgba(0,0,0,0)",  # Transparent plot background
+    #         paper_bgcolor="rgba(0,0,0,0)",  # Transparent figure background
+    #         title={
+    #             "text": "<b><u>Employee Percentage Count by Employment Type</u></b>",
+    #             "font": {"color": "#1E1E1E"},
+    #         },
+    #     )
 
-        return fig
+    #     return fig
 
     @app.callback(
         Output("employee-percentage-by-employment-type_sb", "figure"),
@@ -950,7 +950,7 @@ def register_attendance_callbacks(app):
             aspect="auto",
             color_continuous_scale=custom_colorscale,  # Apply custom color scale
         )
-        
+
         # Improve layout
         heatmap_fig.update_layout(xaxis_title="", yaxis_title="Employee Count")
         # Remove background and legend
